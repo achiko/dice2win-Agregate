@@ -5,7 +5,7 @@ const Header = ({}) => (
     		<nav className="navbar navbar-light navbar-expand-lg border-bottom mb-3">
 
                 <div className="navbar-brand">
-                     <h1> The Ethereum Gambling Explorer</h1>
+                     <h2>BetScan  The Ethereum Bet Explorer  </h2>
                 </div>
 
                 <button className="navbar-toggler"
@@ -16,6 +16,7 @@ const Header = ({}) => (
 
                 <div className="collapse navbar-collapse" id="navbarCollapse">
                 </div>
+
             </nav>
 
 )

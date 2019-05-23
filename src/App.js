@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import ApolloClient, { gql, InMemoryCache } from 'apollo-boost'
 import { ApolloProvider, Query } from 'react-apollo'
-import { ArrowRight } from 'react-feather';
 import './App.css'
 import Header from './components/Header'
 import Dice2WinCard from './components/dice2win/dice2wincard'
+import EtherRoll from './components/etherroll/Etherollcard'
 import BetsTable from './components/BetsTable'
+
 
 if (!process.env.REACT_APP_GRAPHQL_ENDPOINT) {
   throw new Error('REACT_APP_GRAPHQL_ENDPOINT environment variable not defined')
@@ -44,7 +45,15 @@ class App extends Component {
 	<div>
 	
 		<Header /> 
+		
 		<ApolloProvider client={client}>
+
+		<div className="container">
+			<div className="alert alert-secondary" role="alert">
+				Total 54 670 ether wagered and 39 450 ether won in the past 30 days 
+			</div>
+		</div>
+
       	<div className="container">
 			<div className="row">
 				<div className="col-12 col-xl-12 d-flex">
@@ -54,8 +63,7 @@ class App extends Component {
 	 			<div className="col-12 col-xl-6 d-flex">
 				 <Query query={PaymentsQuery} >
                    {({ data, error, loading }) => {
-                     console.log('Loading :  ', loading);
-
+                    
                      if(loading) {
                        return (
 							<p> Loading ... </p>
@@ -63,9 +71,8 @@ class App extends Component {
                      }
 
                      if(!loading) {
-                         console.log(data.payments)
-                         return (
 
+                         return (
 							<Dice2WinCard data={data} />
 							//    <List>
 							//    { 
@@ -88,6 +95,7 @@ class App extends Component {
 		  		</div>
 				<div className="col-12 col-xl-6 d-flex">
 					{/* <!-- EtherRoll Card  -->  */}
+					<EtherRoll /> 
 		  		</div>	 
 			</div> {/* <!-- Row  -->  */}
 
@@ -97,54 +105,12 @@ class App extends Component {
 			</div>
 		
 		</div> {/* <!-- Container -->  */}
+		
 		</ApolloProvider>
+
+
 	</div>
 
-
-      // <ApolloProvider client={client}>
-      //   <div className="App">
-      //     <Grid container direction="column">
-      //       <Header onHelp={this.toggleHelpDialog} />
-      //       <Grid item>
-      //         <Grid container>
-      //           <Query
-      //             query={PaymentsQuery}
-      //             variables={{ orderBy: orderBy,}}
-      //           >
-      //             {({ data, error, loading }) => {
-      //               console.log('Loading :  ', loading);
-
-      //               if(loading) {
-      //                 return (
-      //                   <LinearProgress variant="query" style={{ width: '100%' }} />
-      //                 )
-      //               }
-
-      //               if(!loading) {
-      //                   console.log(data.payments)
-      //                   return (
-      //                     <List>
-      //                     { 
-      //                       data.payments.map( (item, key) => {
-      //                         return (
-      //                           <ListItem key={key} alignItems="flex-start">
-      //                             <ListItemText primary={item.amount / 10 ** 18 } />
-      //                             <ListItemText secondary={item._beneficiary} />
-      //                           </ListItem>
-      //                         )
-      //                     })}
-      //                     </List>
-      //                   )
-      //               }
-
-      //             }}
-      //           </Query>
-      //         </Grid>
-      //       </Grid>
-      //     </Grid>
-
-      //   </div>
-      // </ApolloProvider>
     )
   }
 }
